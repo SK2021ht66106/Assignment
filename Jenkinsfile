@@ -15,7 +15,7 @@ pipeline {
             steps {
                 // Get some code from a GitHub repository
                 cleanWs()
-                checkout changelog: false, poll: false, scm: [$class: 'GitSCM', branches: [[name: '*/betadeploy']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/ashiq-mohd19/s1_devops_test.git']]]
+                checkout changelog: false, poll: false, scm: [$class: 'GitSCM', branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/SK2021ht66106/Assignment.git']]]
 
             }
         }
@@ -41,10 +41,10 @@ pipeline {
             steps{
                 script{
                         // Building and pushing the docker image to repo
-                        withCredentials([usernamePassword( credentialsId: 'dockerhub', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) 
+                        withCredentials([usernamePassword( credentialsId: 'dockerhubsk', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) 
                         {
                                 sh 'docker login --username $USERNAME --password $PASSWORD'
-                                dockerImage = docker.build("srinijakammari/devops")
+                                dockerImage = docker.build("saikiran275/test")
                                 docker.withRegistry('', 'dockerhub') {
                                     sh 'docker login -u $USERNAME -p $PASSWORD'
                                     dockerImage.push("$BUILD_NUMBER")
@@ -58,7 +58,7 @@ pipeline {
         stage('Deploy_NonProd'){
             steps{
                     //Running container in local env
-                    sh 'docker run --name helloapp$BUILD_NUMBER -d srinijakammari/devops:latest'
+                    sh 'docker run --name helloapp$BUILD_NUMBER -d saikiran275/test:latest'
             }
            
         }
