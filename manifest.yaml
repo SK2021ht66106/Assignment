@@ -1,14 +1,11 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: helloappbitsdevops-deployment
+  name: helloappbitsdevops-deployment1
   labels:
     app: helloapp
 spec:
   replicas: 2
-  selector:
-    matchLabels:
-      app: helloapp
   template:
     metadata:
       labels:
@@ -17,8 +14,16 @@ spec:
       containers:
       - name: helloapp
         image: srinijakammari/devops:latest
-        
-        
+        imapepullpolicy:IfNotPresent
+      restartPolicy: Always
+  selector:
+    matchLabels:
+      app: helloapp
+       
+       
+----------
+
+
 apiVersion: v1
 kind: Service
 metadata:
