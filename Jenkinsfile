@@ -74,15 +74,13 @@ pipeline {
         
         stage('Deploy_Production'){
             steps{
-                //Deploying the container in GKE cluster
-                step([
-                $class: 'KubernetesEngineBuilder',
-                projectId: env.PROJECT_ID,
-                clusterName: env.CLUSTER_NAME,
-                location: env.LOCATION,
-                manifestPattern: 'manifest.yaml',
-                credentialsId: env.CREDENTIALS_ID,
-                verifyDeployments: true])
+                //Deploying the container in AKS cluster
+                step(acsDeploy(azureCredentialsId: 'azuresk',
+          resourceGroupName: 'test',
+          containerService: 'Kiran',
+          sshCredentialsId: '$HOME/.ssh/id_rsa',
+          configFilePaths: 'saikiran275/test:Latest',
+          enableConfigSubstitution: true)
             }
         }
     }
