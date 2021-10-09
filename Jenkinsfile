@@ -81,7 +81,7 @@ pipeline {
           sshCredentialsId: '$HOME/.ssh/id_rsa',
           configFilePaths: 'saikiran275/test:Latest',
           enableConfigSubstitution: true)
-            }
+      
         }
     }
 }
